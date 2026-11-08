@@ -9,3 +9,4 @@ Known problems that are not issues yet.
 | `LICENSE` names "Haptics Studio Examples contributors" because the maintainer collective has no name yet. | Updating the copyright line when the name is settled. |
 | Haptics Studio's documentation links to this repository, so those links would fail if Haptics Studio opened first. | Opening this repository with or before Haptics Studio. |
 | This repository has no open issues, and the plans for its content are tracked outside it. | Filing issues here for the work a maintainer approves. |
+| `CODE_OF_CONDUCT.md` uses the Contributor Covenant 1.4, whose file states no licence. The source repository's `LICENSE.md` is the Hippocratic License 3.0, and whether that covers the 1.4 text is not established. | Establishing which terms cover the 1.4 text, and following them. |
