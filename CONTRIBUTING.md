@@ -10,7 +10,7 @@ Fork the repository, work on a branch made from `main`, and open a pull request 
 
 ## What Can Be Added
 
-Everything here except the Code of Conduct, which keeps its own attribution, is released under CC BY 4.0. So only add what you made yourself or what its owner allows to be released that way. Audio, images and text taken from a product or a game usually do not qualify, even when they are easy to download.
+Everything here except the Code of Conduct, which keeps its own attribution, is released under CC BY 4.0. So only add what you made yourself, what its owner allows to be released that way, or what is released under CC0. Audio, images, code and text taken from a product or a game usually do not qualify, even when they are easy to download. Ask a maintainer in an issue before adding anything under another license, such as MIT or CC BY-SA.
 
 Each folder that holds sample files has a **Sources** table in its README. Add a row for every file you add, with its source, author and licence.
 
