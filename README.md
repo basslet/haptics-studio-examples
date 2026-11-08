@@ -22,7 +22,11 @@ Haptic design guidance, sample projects and integration examples for [Haptics St
 
 ## License
 
-This project is under the [MIT License](LICENSE). See [Contributing](CONTRIBUTING.md) for what can be added.
+Copyright (c) Haptics Studio Examples contributors. This project is under the [Creative Commons Attribution 4.0 International License](LICENSE) (CC BY 4.0), so you can use it for anything, including commercial work, as long as you credit it.
+
+To credit it, name Haptics Studio Examples and link to this repository, and say if you changed anything. A line in your documentation or in a game's credits is enough.
+
+See [Contributing](CONTRIBUTING.md) for what can be added.
 
 ## The Haptics Projects
 

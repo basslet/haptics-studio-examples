@@ -12,4 +12,4 @@ The documentation restructure is tracked in [basslet/haptics-studio#5](https://g
 ## Waiting on People
 
 - A maintainer: the content for every placeholder.
-- The name of the maintainer collective, for the copyright line in `LICENSE`.
+- The name of the maintainer collective, for the copyright line in `README.md`.
