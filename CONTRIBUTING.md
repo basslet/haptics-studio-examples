@@ -8,6 +8,8 @@ Haptics Studio Examples is run by volunteers, so answers and reviews come when s
 
 Fork the repository, work on a branch made from `main`, and open a pull request against `main`.
 
+Every page starts with the navigation block. Before you open the pull request, run `node scripts/check_doc_links.js`: it checks the block and every link, and with `--fix` it writes the block on a page you added. The same check runs on the pull request.
+
 ## What Can Be Added
 
 Everything here except the Code of Conduct, which keeps its own attribution, is released under CC BY 4.0. So only add what you made yourself, what its owner allows to be released that way, or what is released under CC0. Audio, images, code and text taken from a product or a game usually do not qualify, even when they are easy to download. Ask a maintainer in an issue before adding anything under another license, such as MIT or CC BY-SA.

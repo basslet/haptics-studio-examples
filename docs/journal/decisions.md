@@ -8,4 +8,4 @@ Decisions in force, and why.
 | Every sample file records its source, author and licence in its folder's README. | The right to release a file can be checked without asking who added it. |
 | The repository stays private until a maintainer has reviewed all content. | Publishing cannot be undone, so the review comes first. |
 | No contributor agreement. | Contributions are released under `LICENSE`, which keeps contributing simple. |
-| Navigation lines link Haptics Studio and the Haptics SDK directly. | Those repositories and this one read as one suite. |
+| Every page a reader opens starts with one navigation block for the whole suite, which `scripts/doc_nav.js` generates. The documentation lint (`scripts/doc_nav.js`, `scripts/check_doc_links.js` and their tests) is the same in Haptics Studio, the Haptics SDK and this repository, and reads the repository's name from its git remote: a change is made in one and copied to the other two. `AGENTS.md` and `docs/journal/` have no block. | A reader sees the three repositories as one suite, and where they are in it. One set of files keeps the three blocks the same. |
