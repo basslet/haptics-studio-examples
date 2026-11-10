@@ -109,6 +109,14 @@ test('--fix replaces the block at the top, drops old navigation and keeps the bo
   assert.strictEqual(r.files['docs/architecture.md'], page('docs/architecture.md', '# Architecture'));
 });
 
+test('--fix never deletes a second copy of the block; the lint asks for its removal by hand', () => {
+  const twice = page('docs/building.md', `# Building\n\n${navBlock('docs/building.md', 'haptics-studio')}`);
+  const r = lint({ ...ok, 'docs/building.md': twice }, '--fix');
+  assert.strictEqual(r.status, 1);
+  assert.match(r.stderr, /^docs\/building\.md:10: second navigation block; remove it by hand$/m);
+  assert.strictEqual(r.files['docs/building.md'], twice);
+});
+
 test('stops with one line when the origin is not one of the three repositories', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'doclinks-'));
   const env = { ...process.env, HOME: dir };
@@ -117,7 +125,7 @@ test('stops with one line when the origin is not one of the three repositories',
   const none = run();
   execFileSync('git', ['remote', 'add', 'origin', 'git@github.com:someone/Haptics-SDK.git'], { cwd: dir, env });
   const ssh = run();
-  execFileSync('git', ['remote', 'set-url', 'origin', 'https://user:SECRET@example.com/fork.git'], { cwd: dir, env });
+  execFileSync('git', ['remote', 'set-url', 'origin', 'https://user:SE/C@RET@example.com/fork.git'], { cwd: dir, env });
   const fork = run();
   fs.rmSync(dir, { recursive: true, force: true });
   assert.strictEqual(none.status, 1);
@@ -125,4 +133,5 @@ test('stops with one line when the origin is not one of the three repositories',
   assert.strictEqual(ssh.status, 0, ssh.stderr);
   assert.strictEqual(fork.status, 1);
   assert.match(fork.stderr, /^origin "https:\/\/example\.com\/fork\.git" is not /, 'credentials in the origin are not printed');
+  assert.doesNotMatch(fork.stderr, /SE|RET/);
 });
