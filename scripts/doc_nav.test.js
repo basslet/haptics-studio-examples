@@ -8,7 +8,7 @@ const path = require('path');
 const { navBlock } = require('./doc_nav');
 
 // Written by hand, so a generator bug cannot pass by agreeing with itself.
-test('marks the page or its nearest ancestor README, links within the repository relative and the others on main', () => {
+test('marks the page or its nearest section README, links within the repository relative and the others on main', () => {
   const ios = navBlock('1 Design Guidelines/Apple iOS/README.md', 'haptics-studio-examples');
   assert.match(
     ios,
