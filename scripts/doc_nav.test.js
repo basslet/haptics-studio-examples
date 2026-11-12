@@ -8,7 +8,7 @@ const path = require('path');
 const { navBlock } = require('./doc_nav');
 
 // Written by hand, so a generator bug cannot pass by agreeing with itself.
-test('marks the page or its nearest ancestor README, links within the repository relative and the others on main', () => {
+test('marks the page or its nearest section README, links within the repository relative and the others on main', () => {
   const ios = navBlock('1 Design Guidelines/Apple iOS/README.md', 'haptics-studio-examples');
   assert.match(
     ios,
@@ -24,8 +24,11 @@ test('marks the page or its nearest ancestor README, links within the repository
     navBlock('docs/building.md', 'haptics-studio'),
     /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(\.\.\/README\.md\) · \[Design & Integration\]\(design-and-integration\/README\.md\) · \*\*▸ Source Code\*\* · \[Architecture\]\(architecture\.md\) \|$/m,
   );
-  // A page with no entry and no section README above it falls back to the root README.
-  assert.match(navBlock('main/README.md', 'haptics-studio'), /^\| \*\*Haptics Studio\*\* \| \*\*▸ Overview\*\* · \[Design & Integration\]\(\.\.\/docs\/design-and-integration\/README\.md\) · /m);
+  // A page with no entry and no section README above it marks nothing; the root README marks only itself.
+  const component = navBlock('main/README.md', 'haptics-studio');
+  assert.match(component, /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(\.\.\/README\.md\) · \[Design & Integration\]\(\.\.\/docs\/design-and-integration\/README\.md\) · /m);
+  assert.doesNotMatch(component, /▸/);
+  assert.match(navBlock('README.md', 'haptics-studio'), /^\| \*\*Haptics Studio\*\* \| \*\*▸ Overview\*\* · /m);
   // A subpage with no entry of its own marks the section whose README sits above it.
   assert.match(
     navBlock('docs/design-and-integration/getting-started.md', 'haptics-studio'),
