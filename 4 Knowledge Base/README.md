@@ -7,7 +7,7 @@
 
 # Knowledge Base
 
-> **Placeholder.** General knowledge about platforms, capabilities and actuator types, and links to other resources.
+> **Placeholder.** General knowledge about platforms, capabilities and actuator types. Documentation from the makers of each platform and tool is listed once, on Haptics Studio's [Resources](https://github.com/basslet/haptics-studio/blob/main/docs/design-and-integration/resources.md) page.
 
 ## Pages
 
