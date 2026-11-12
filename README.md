@@ -15,7 +15,7 @@ Haptic design guidance, sample projects and integration examples for [Haptics St
 
 | Section | Holds |
 | :--- | :--- |
-| [Design Guidelines](1%20Design%20Guidelines/README.md) | General and platform-specific haptic design guidance |
+| [Design Guidelines](1%20Design%20Guidelines/README.md) | Haptic design guidance for each platform, longer guides and worked examples |
 | [Design Examples](2%20Design%20Examples/README.md) | Audio files and `.hasp` project files |
 | [Integration & Code Snippets](3%20Integration%20%26%20Code%20Snippets/README.md) | Code, samples and `.haptic` files |
 | [Knowledge Base](4%20Knowledge%20Base/README.md) | Platforms, capabilities and actuator types |
