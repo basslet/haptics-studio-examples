@@ -5,6 +5,12 @@
 | **Haptics Studio Examples** | **▸ Overview** · [Guidelines](1%20Design%20Guidelines/README.md) · [Examples](2%20Design%20Examples/README.md) · [Code](3%20Integration%20%26%20Code%20Snippets/README.md) · [Knowledge](4%20Knowledge%20Base/README.md) · [Skills](5%20Skills/README.md) |
 | **General** | [Code of Conduct](CODE_OF_CONDUCT.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE) · [Security](SECURITY.md) |
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/logo-light.png">
+  <img alt="Haptics Studio Examples" src="./assets/logo-light.png" width="800">
+</picture>
+
 # Haptics Studio Examples
 
 Haptic design guidance, sample projects and integration examples for [Haptics Studio](https://github.com/basslet/haptics-studio) and the [Haptics SDK](https://github.com/basslet/haptics-sdk).
