@@ -17,8 +17,9 @@ const NAV = [
     'Haptics Studio',
     'haptics-studio',
     [
-      ['Getting Started', 'README.md'],
-      ['Design & Integration', 'docs/design-and-integration.md'],
+      ['Overview', 'README.md'],
+      ['Design & Integration', 'docs/design-and-integration/README.md'],
+      ['Source Code', 'docs/building.md'],
       ['Architecture', 'docs/architecture.md'],
     ],
   ],

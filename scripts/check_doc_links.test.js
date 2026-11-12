@@ -30,7 +30,7 @@ const lint = (files, ...args) => {
 const page = (f, body) => `${navBlock(f, 'haptics-studio')}\n\n${body}\n`;
 // Every page the navigation block links in this repository, so its links resolve.
 const site = Object.fromEntries(
-  ['README.md', 'docs/design-and-integration.md', 'docs/architecture.md', 'CODE_OF_CONDUCT.md', 'CONTRIBUTING.md', 'SECURITY.md'].map(
+  ['README.md', 'docs/design-and-integration/README.md', 'docs/building.md', 'docs/architecture.md', 'CODE_OF_CONDUCT.md', 'CONTRIBUTING.md', 'SECURITY.md'].map(
     (f) => [f, page(f, '# Page')],
   ),
 );
@@ -77,9 +77,9 @@ test('ignores backticked text that does not start at a repo directory', () => {
 test('navigation block: a good page passes; a missing block, a wrong marker and a leftover bottom line fail', () => {
   const r = lint({
     ...ok,
-    'docs/building.md': page('docs/building.md', '# Building\n\n[a](architecture.md) · [b](design-and-integration.md)\n\nEnd.'),
+    'docs/building.md': page('docs/building.md', '# Building\n\n[a](architecture.md) · [b](design-and-integration/README.md)\n\nEnd.'),
     'main/README.md': '# Main',
-    'docs/design-and-integration.md': page('docs/architecture.md', '# Design'),
+    'docs/architecture.md': page('docs/building.md', '# Architecture'),
     'SECURITY.md': page('SECURITY.md', '# Security\n\n[Getting Started](README.md) · [Architecture](docs/architecture.md)'),
     'CONTRIBUTING.md': page('CONTRIBUTING.md', `# Contributing\n\n${navBlock('CONTRIBUTING.md', 'haptics-studio')}`),
     'AGENTS.md': '# Agents',
@@ -87,7 +87,7 @@ test('navigation block: a good page passes; a missing block, a wrong marker and 
   });
   assert.strictEqual(r.status, 1);
   assert.match(r.stderr, /^main\/README\.md:1: no navigation block at the top/m);
-  assert.match(r.stderr, /^docs\/design-and-integration\.md:1: navigation block differs from the generated one/m);
+  assert.match(r.stderr, /^docs\/architecture\.md:1: navigation block differs from the generated one/m);
   assert.match(r.stderr, /^SECURITY\.md:10: leftover navigation line/m);
   assert.match(r.stderr, /^CONTRIBUTING\.md:10: second navigation block/m);
   assert.doesNotMatch(r.stderr, /building|AGENTS|journal|broken link/);
@@ -95,7 +95,7 @@ test('navigation block: a good page passes; a missing block, a wrong marker and 
 
 test('--fix replaces the block at the top, drops old navigation and keeps the body', () => {
   const old = '[Getting Started](../README.md) · [Architecture](architecture.md)';
-  const body = '# Building\n\n| | |\n| --- | --- |\n| Key | Value |\n\n[a](architecture.md) · [b](design-and-integration.md)\n\nText.';
+  const body = '# Building\n\n| | |\n| --- | --- |\n| Key | Value |\n\n[a](architecture.md) · [b](design-and-integration/README.md)\n\nText.';
   const r = lint(
     {
       ...ok,

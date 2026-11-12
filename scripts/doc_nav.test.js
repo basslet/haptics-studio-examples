@@ -16,13 +16,18 @@ test('marks the page or its nearest ancestor README, links within the repository
   );
   assert.match(
     ios,
-    /^\| \*\*Haptics Studio\*\* \| \[Getting Started\]\(https:\/\/github\.com\/basslet\/haptics-studio\) · \[Design & Integration\]\(https:\/\/github\.com\/basslet\/haptics-studio\/blob\/main\/docs\/design-and-integration\.md\) · /m,
+    /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(https:\/\/github\.com\/basslet\/haptics-studio\) · \[Design & Integration\]\(https:\/\/github\.com\/basslet\/haptics-studio\/blob\/main\/docs\/design-and-integration\/README\.md\) · /m,
   );
   assert.match(ios, /^\| \*\*Haptics SDK\*\* \| \[Overview\]\(https:\/\/github\.com\/basslet\/haptics-sdk\) · \[Getting Started\]\(https:\/\/github\.com\/basslet\/haptics-sdk\/blob\/main\/docs\/getting-started\.md\) · /m);
   assert.match(ios, /^\| \*\*General\*\* \| \[Code of Conduct\]\(\.\.\/\.\.\/CODE_OF_CONDUCT\.md\) · /m);
   assert.match(
     navBlock('docs/building.md', 'haptics-studio'),
-    /^\| \*\*Haptics Studio\*\* \| \*\*▸ Getting Started\*\* · \[Design & Integration\]\(design-and-integration\.md\) · \[Architecture\]\(architecture\.md\) \|$/m,
+    /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(\.\.\/README\.md\) · \[Design & Integration\]\(design-and-integration\/README\.md\) · \*\*▸ Source Code\*\* · \[Architecture\]\(architecture\.md\) \|$/m,
+  );
+  // A subpage with no entry of its own marks the section whose README sits above it.
+  assert.match(
+    navBlock('docs/design-and-integration/getting-started.md', 'haptics-studio'),
+    /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(\.\.\/\.\.\/README\.md\) · \*\*▸ Design & Integration\*\* · \[Source Code\]\(\.\.\/building\.md\) · \[Architecture\]\(\.\.\/architecture\.md\) \|$/m,
   );
   for (const [, url] of navBlock('README.md', 'haptics-sdk').matchAll(/\]\((https:[^)]+)\)/g)) {
     assert.match(url, /^https:\/\/github\.com\/basslet\/[\w-]+(\/blob\/main\/.+)?$/, 'another repository is linked on its default branch');
