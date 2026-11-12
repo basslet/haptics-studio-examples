@@ -18,4 +18,4 @@
 
 ## Links to Other Sites
 
-> **Placeholder.** Links to external guidance.
+Haptics Studio keeps the one list of documentation from the makers of each platform and tool: [Resources](https://github.com/basslet/haptics-studio/blob/main/docs/design-and-integration/resources.md).
