@@ -24,6 +24,8 @@ test('marks the page or its nearest ancestor README, links within the repository
     navBlock('docs/building.md', 'haptics-studio'),
     /^\| \*\*Haptics Studio\*\* \| \[Overview\]\(\.\.\/README\.md\) · \[Design & Integration\]\(design-and-integration\/README\.md\) · \*\*▸ Source Code\*\* · \[Architecture\]\(architecture\.md\) \|$/m,
   );
+  // A page with no entry and no section README above it falls back to the root README.
+  assert.match(navBlock('main/README.md', 'haptics-studio'), /^\| \*\*Haptics Studio\*\* \| \*\*▸ Overview\*\* · \[Design & Integration\]\(\.\.\/docs\/design-and-integration\/README\.md\) · /m);
   // A subpage with no entry of its own marks the section whose README sits above it.
   assert.match(
     navBlock('docs/design-and-integration/getting-started.md', 'haptics-studio'),
