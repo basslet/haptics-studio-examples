@@ -144,7 +144,10 @@ test('DOCS_REPO names the repository of a fork under another name, and only then
   const run = (repo) => spawnSync('node', [script, dir], { encoding: 'utf8', env: { ...env, DOCS_REPO: repo } });
   const named = run('Haptics-Studio');
   const wrong = run('my-studio');
-  fs.writeFileSync(path.join(dir, 'README.md'), page('README.md', 'Body.'));
+  for (const [f, content] of Object.entries({ ...ok, 'README.md': page('README.md', 'Body.') })) {
+    fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true });
+    fs.writeFileSync(path.join(dir, f), content);
+  }
   execFileSync('git', ['add', '-A'], { cwd: dir, env });
   execFileSync('git', ['remote', 'set-url', 'origin', 'https://github.com/basslet/haptics-studio.git'], { cwd: dir, env });
   const leftover = run('haptics-sdk');
@@ -153,5 +156,5 @@ test('DOCS_REPO names the repository of a fork under another name, and only then
   assert.strictEqual(wrong.status, 1);
   assert.match(wrong.stderr, /^DOCS_REPO "my-studio" is not haptics-studio, /);
   // Studio's block passes; with DOCS_REPO winning, the page would get the SDK's block and fail.
-  assert.doesNotMatch(leftover.stderr, /navigation block/, 'an origin that names the repository wins over DOCS_REPO');
+  assert.strictEqual(leftover.status, 0, `an origin that names the repository wins over DOCS_REPO: ${leftover.stderr}`);
 });
