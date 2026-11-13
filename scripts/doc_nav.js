@@ -17,8 +17,9 @@ const NAV = [
     'Haptics Studio',
     'haptics-studio',
     [
-      ['Getting Started', 'README.md'],
-      ['Design & Integration', 'docs/design-and-integration.md'],
+      ['Overview', 'README.md'],
+      ['Design & Integration', 'docs/design-and-integration/README.md'],
+      ['Source Code', 'docs/building.md'],
       ['Architecture', 'docs/architecture.md'],
     ],
   ],
@@ -57,17 +58,15 @@ const NAV = [
 
 const encode = (p) => p.split('/').map(encodeURIComponent).join('/');
 
-// The block for `page`, a path from the root of `repo`. The page's own entry, or else that of the nearest ancestor
-// README with one, is bold, marked ▸ and not a link. Links within `repo` are relative to the page; links into another
-// repository go to its main branch, and to its root for its README.
+// The block for `page`, a path from the root of `repo`. The page's own entry, or else that of the nearest section
+// README above it with one, is bold, marked ▸ and not a link; the root README marks only itself, so a page outside
+// every section marks nothing. Links within `repo` are relative to the page; links into another repository go to its
+// main branch, and to its root for its README.
 const navBlock = (page, repo) => {
   if (!REPOS.includes(repo)) throw new Error(`unknown repository ${repo}`);
   const own = NAV.flatMap(([, r, entries]) => ((r ?? repo) === repo ? entries.map(([, p]) => p) : []));
   const ancestors = [page];
-  for (let dir = path.dirname(page); ; dir = path.dirname(dir)) {
-    ancestors.push(path.join(dir, 'README.md'));
-    if (dir === '.') break;
-  }
+  for (let dir = path.dirname(page); dir !== '.'; dir = path.dirname(dir)) ancestors.push(path.join(dir, 'README.md'));
   const here = ancestors.find((p) => own.includes(p));
   const rows = NAV.map(([group, r, entries]) => {
     const target = r ?? repo;

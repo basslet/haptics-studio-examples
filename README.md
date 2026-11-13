@@ -1,6 +1,6 @@
 | | |
 | :--- | :--- |
-| **Haptics Studio** | [Getting Started](https://github.com/basslet/haptics-studio) · [Design & Integration](https://github.com/basslet/haptics-studio/blob/main/docs/design-and-integration.md) · [Architecture](https://github.com/basslet/haptics-studio/blob/main/docs/architecture.md) |
+| **Haptics Studio** | [Overview](https://github.com/basslet/haptics-studio) · [Design & Integration](https://github.com/basslet/haptics-studio/blob/main/docs/design-and-integration/README.md) · [Source Code](https://github.com/basslet/haptics-studio/blob/main/docs/building.md) · [Architecture](https://github.com/basslet/haptics-studio/blob/main/docs/architecture.md) |
 | **Haptics SDK** | [Overview](https://github.com/basslet/haptics-sdk) · [Getting Started](https://github.com/basslet/haptics-sdk/blob/main/docs/getting-started.md) · [Documentation](https://github.com/basslet/haptics-sdk/blob/main/docs/README.md) |
 | **Haptics Studio Examples** | **▸ Overview** · [Guidelines](1%20Design%20Guidelines/README.md) · [Examples](2%20Design%20Examples/README.md) · [Code](3%20Integration%20%26%20Code%20Snippets/README.md) · [Knowledge](4%20Knowledge%20Base/README.md) · [Skills](5%20Skills/README.md) |
 | **General** | [Code of Conduct](CODE_OF_CONDUCT.md) · [Contributing](CONTRIBUTING.md) · [License](LICENSE) · [Security](SECURITY.md) |
@@ -21,10 +21,10 @@ Haptic design guidance, sample projects and integration examples for [Haptics St
 
 | Section | Holds |
 | :--- | :--- |
-| [Design Guidelines](1%20Design%20Guidelines/README.md) | General and platform-specific haptic design guidance |
+| [Design Guidelines](1%20Design%20Guidelines/README.md) | Haptic design guidance for each platform, longer guides and worked examples |
 | [Design Examples](2%20Design%20Examples/README.md) | Audio files and `.hasp` project files |
 | [Integration & Code Snippets](3%20Integration%20%26%20Code%20Snippets/README.md) | Code, samples and `.haptic` files |
-| [Knowledge Base](4%20Knowledge%20Base/README.md) | Platforms, capabilities, actuator types, and links to other resources |
+| [Knowledge Base](4%20Knowledge%20Base/README.md) | Platforms, capabilities and actuator types |
 | [Skills](5%20Skills/README.md) | Skills for coding agents |
 
 ## Getting Started

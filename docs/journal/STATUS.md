@@ -2,7 +2,7 @@
 
 This repository is being built. Its pages are placeholders for a maintainer to fill, and it holds no sample projects yet. It is private and meant to go public.
 
-The documentation restructure is tracked in [basslet/haptics-studio#5](https://github.com/basslet/haptics-studio/issues/5).
+The documentation restructure is tracked in [basslet/haptics-studio#5](https://github.com/basslet/haptics-studio/issues/5). Its remaining pull requests target `main`.
 
 ## Before the Repository Opens
 
