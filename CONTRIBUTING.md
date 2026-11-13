@@ -55,7 +55,7 @@ These are the rules the maintainers follow, so you know what happens to your iss
 ### Code of Conduct Reports
 
 - Reports go to the contact in the [Code of Conduct](CODE_OF_CONDUCT.md).
-- A maintainer does not discuss a report in public and does not handle a report about themselves. Until a second maintainer is named, a report about the maintainer has no independent reviewer, as the Code of Conduct says.
+- A maintainer does not take a report further in public and does not handle a report about themselves. The contact is on GitHub, which has no private messages, so the report itself is public. Until a second maintainer is named, a report about the maintainer has no independent reviewer, as the Code of Conduct says.
 
 ### Becoming a Maintainer
 
