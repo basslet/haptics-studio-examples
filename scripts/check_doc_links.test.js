@@ -158,3 +158,11 @@ test('DOCS_REPO names the repository of a fork under another name, and only then
   // Studio's block passes; with DOCS_REPO winning, the page would get the SDK's block and fail.
   assert.strictEqual(leftover.status, 0, `an origin that names the repository wins over DOCS_REPO: ${leftover.stderr}`);
 });
+
+test('stops with one line outside a git work tree, even with DOCS_REPO set', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'doclinks-'));
+  const r = spawnSync('node', [script, dir], { encoding: 'utf8', env: { ...process.env, HOME: dir, DOCS_REPO: 'haptics-studio' } });
+  fs.rmSync(dir, { recursive: true, force: true });
+  assert.strictEqual(r.status, 1);
+  assert.strictEqual(r.stderr, `${dir} is not a git work tree; run the lint in a clone\n`);
+});

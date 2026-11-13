@@ -25,7 +25,7 @@ let origin = '';
 try {
   // Credentials in the URL never reach the output: everything from // to the last @ goes.
   origin = execFileSync('git', ['remote', 'get-url', 'origin'], { cwd: root, encoding: 'utf8', stdio: 'pipe' }).trim().replace(/\/\/.*@/, '//');
-} catch {} // no origin: refused below with the others
+} catch {} // no origin (or no git): DOCS_REPO names the repository, else refused below
 const named = process.env.DOCS_REPO;
 const fromOrigin = path.basename(origin, '.git').toLowerCase();
 const REPO = REPOS.includes(fromOrigin) || !named ? fromOrigin : named.toLowerCase();
@@ -34,7 +34,14 @@ if (!REPOS.includes(REPO)) {
   console.error(`${what} is not ${REPOS.slice(0, -1).join(', ')} or ${REPOS.at(-1)}; set DOCS_REPO to the one this clone is`);
   process.exit(1);
 }
-const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);
+let tracked;
+try {
+  tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8', stdio: 'pipe' }).split('\0').filter(Boolean);
+} catch {
+  // A download without .git, such as GitHub's Download ZIP, reaches here when DOCS_REPO is set.
+  console.error(`${root} is not a git work tree; run the lint in a clone`);
+  process.exit(1);
+}
 const topDirs = new Set(tracked.filter((f) => f.includes('/')).map((f) => f.split('/')[0]));
 const srcExt = /\.(ts|tsx|js|jsx|kt|java|swift|cs|py|sh|md)$/;
 const commentLine = /^\s*(\/\/|\/\*|\*|#|"""|--)/;
