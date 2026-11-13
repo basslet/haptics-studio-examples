@@ -19,16 +19,19 @@ const { navBlock, REPOS } = require('./doc_nav');
 const args = process.argv.slice(2);
 const fix = args.includes('--fix');
 const root = path.resolve(args.find((a) => a !== '--fix') || path.join(__dirname, '..'));
-// The repository this runs in, from its origin's name (any URL form, any case).
-// shortcut: a fork or local clone under another name is refused; add a name override if contributors need one.
+// The repository this runs in: its origin's name (any URL form, any case), else DOCS_REPO.
+// A fork under another name, or a clone without an origin, sets DOCS_REPO; a correct origin always wins.
 let origin = '';
 try {
   // Credentials in the URL never reach the output: everything from // to the last @ goes.
   origin = execFileSync('git', ['remote', 'get-url', 'origin'], { cwd: root, encoding: 'utf8', stdio: 'pipe' }).trim().replace(/\/\/.*@/, '//');
 } catch {} // no origin: refused below with the others
-const REPO = path.basename(origin, '.git').toLowerCase();
+const named = process.env.DOCS_REPO;
+const fromOrigin = path.basename(origin, '.git').toLowerCase();
+const REPO = REPOS.includes(fromOrigin) || !named ? fromOrigin : named.toLowerCase();
 if (!REPOS.includes(REPO)) {
-  console.error(`origin "${origin || 'none'}" is not ${REPOS.slice(0, -1).join(', ')} or ${REPOS.at(-1)}; run the lint in a clone of one of them`);
+  const what = named ? `DOCS_REPO "${named}"` : `origin "${origin || 'none'}"`;
+  console.error(`${what} is not ${REPOS.slice(0, -1).join(', ')} or ${REPOS.at(-1)}; set DOCS_REPO to the one this clone is`);
   process.exit(1);
 }
 const tracked = execFileSync('git', ['ls-files', '-z'], { cwd: root, encoding: 'utf8' }).split('\0').filter(Boolean);

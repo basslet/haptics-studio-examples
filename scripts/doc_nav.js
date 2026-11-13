@@ -3,7 +3,7 @@
 // basslet/haptics-sdk and basslet/haptics-studio-examples: change them in one, copy them to the other two, then run
 // `node scripts/doc_nav.js --compare`, which names every repository whose copy on main differs.
 // An entry is listed once its page exists on its repository's working branch; until that reaches main, links to it
-// from the other repositories 404 (accepted by the operator on #32).
+// from the other repositories 404 (accepted by the maintainers on #32).
 const { execFileSync } = require('child_process');
 const fs = require('fs');
 const path = require('path').posix;
