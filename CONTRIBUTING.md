@@ -13,7 +13,7 @@ Haptics Studio Examples is run by volunteers, so answers and reviews come when s
 
 Fork the repository, work on a branch made from `main`, and open a pull request against `main`.
 
-Every page starts with the navigation block. Before you open the pull request, run `node scripts/check_doc_links.js`: it checks the block and every link within the repository, and with `--fix` it writes the block on a page you added. The same check runs on the pull request.
+Every page starts with the navigation block. Before you open the pull request, run `node scripts/check_doc_links.js`: it checks the block and every link within the repository, and with `--fix` it writes the block on a page you added. The same check runs on the pull request. In a fork under another name, or a clone without an origin, set the environment variable `DOCS_REPO` to `haptics-studio-examples` before you run it; a correct origin still takes precedence.
 
 ## What Can Be Added
 

@@ -20,7 +20,7 @@ const lint = (files, ...args) => {
   execFileSync('git', ['init', '-q'], { cwd: dir, env });
   execFileSync('git', ['add', '-A'], { cwd: dir, env });
   execFileSync('git', ['remote', 'add', 'origin', 'https://github.com/basslet/haptics-studio.git'], { cwd: dir, env });
-  const r = spawnSync('node', [script, dir, ...args], { encoding: 'utf8', env: { ...process.env, HOME: dir } });
+  const r = spawnSync('node', [script, dir, ...args], { encoding: 'utf8', env: { ...process.env, HOME: dir, DOCS_REPO: '' } });
   r.files = Object.fromEntries(Object.keys(files).map((f) => [f, fs.readFileSync(path.join(dir, f), 'utf8')]));
   fs.rmSync(dir, { recursive: true, force: true });
   return r;
@@ -119,7 +119,7 @@ test('--fix never deletes a second copy of the block; the lint asks for its remo
 
 test('stops with one line when the origin is not one of the three repositories', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'doclinks-'));
-  const env = { ...process.env, HOME: dir };
+  const env = { ...process.env, HOME: dir, DOCS_REPO: '' }; // unset: the origin decides
   execFileSync('git', ['init', '-q'], { cwd: dir, env });
   const run = () => spawnSync('node', [script, dir], { encoding: 'utf8', env });
   const none = run();
@@ -129,9 +129,40 @@ test('stops with one line when the origin is not one of the three repositories',
   const fork = run();
   fs.rmSync(dir, { recursive: true, force: true });
   assert.strictEqual(none.status, 1);
-  assert.strictEqual(none.stderr, 'origin "none" is not haptics-studio, haptics-sdk or haptics-studio-examples; run the lint in a clone of one of them\n');
+  assert.strictEqual(none.stderr, 'origin "none" is not haptics-studio, haptics-sdk or haptics-studio-examples; set DOCS_REPO to the one this clone is\n');
   assert.strictEqual(ssh.status, 0, ssh.stderr);
   assert.strictEqual(fork.status, 1);
   assert.match(fork.stderr, /^origin "https:\/\/example\.com\/fork\.git" is not /, 'credentials in the origin are not printed');
   assert.doesNotMatch(fork.stderr, /SE|RET/);
+});
+
+test('DOCS_REPO names the repository of a fork under another name, and only then', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'doclinks-'));
+  const env = { ...process.env, HOME: dir };
+  execFileSync('git', ['init', '-q'], { cwd: dir, env });
+  execFileSync('git', ['remote', 'add', 'origin', 'https://github.com/someone/my-studio.git'], { cwd: dir, env });
+  const run = (repo) => spawnSync('node', [script, dir], { encoding: 'utf8', env: { ...env, DOCS_REPO: repo } });
+  const named = run('Haptics-Studio');
+  const wrong = run('my-studio');
+  for (const [f, content] of Object.entries({ ...ok, 'README.md': page('README.md', 'Body.') })) {
+    fs.mkdirSync(path.dirname(path.join(dir, f)), { recursive: true });
+    fs.writeFileSync(path.join(dir, f), content);
+  }
+  execFileSync('git', ['add', '-A'], { cwd: dir, env });
+  execFileSync('git', ['remote', 'set-url', 'origin', 'https://github.com/basslet/haptics-studio.git'], { cwd: dir, env });
+  const leftover = run('haptics-sdk');
+  fs.rmSync(dir, { recursive: true, force: true });
+  assert.strictEqual(named.status, 0, named.stderr);
+  assert.strictEqual(wrong.status, 1);
+  assert.match(wrong.stderr, /^DOCS_REPO "my-studio" is not haptics-studio, /);
+  // Studio's block passes; with DOCS_REPO winning, the page would get the SDK's block and fail.
+  assert.strictEqual(leftover.status, 0, `an origin that names the repository wins over DOCS_REPO: ${leftover.stderr}`);
+});
+
+test('stops with one line outside a git work tree, even with DOCS_REPO set', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'doclinks-'));
+  const r = spawnSync('node', [script, dir], { encoding: 'utf8', env: { ...process.env, HOME: dir, DOCS_REPO: 'haptics-studio' } });
+  fs.rmSync(dir, { recursive: true, force: true });
+  assert.strictEqual(r.status, 1);
+  assert.strictEqual(r.stderr, `${dir} is not a git work tree; run the lint in a clone\n`);
 });
